@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://developer.github.com/v3",
+  baseURL: "https://api.github.com",
   timeout: 1000,
 });
 

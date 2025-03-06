@@ -1,12 +1,16 @@
 import axiosInstance from "./base-connection";
 
-export const get = async (url: string) => {
+const get = async (url: string) => {
   try {
     const response = await axiosInstance.get(encodeURI(url), {
-      headers: { Authorization: `token ` },
+      headers: {
+        Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+      },
     });
-    return response; // Return only the data
+    return response.data;
   } catch (error) {
-    return { error: error || "An error occurred" }; // Better error handling
+    return error || "An error occurred";
   }
 };
+
+export default get;

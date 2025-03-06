@@ -6,7 +6,8 @@ import {
 } from "../../providers/index.providers";
 
 const SearchInput: React.FC = () => {
-  const { valueSearch, setValueSearch } = useContext<IndexContextProps>(IndexContext);
+  const { valueSearch, setValueSearch, setSubmitSearch } =
+    useContext<IndexContextProps>(IndexContext);
   return (
     <>
       <Input
@@ -17,8 +18,20 @@ const SearchInput: React.FC = () => {
           if (setValueSearch && e) setValueSearch(e.target.value);
         }}
       />
-      <Button colorScheme="blue" w="100%">Search</Button>
-      {valueSearch ? <Text alignSelf="flex-start">Showing users for {`"${valueSearch}"`}</Text> : null}
+      <Button
+        onClick={() => {
+          if (setSubmitSearch) setSubmitSearch(valueSearch || "");
+        }}
+        colorScheme="blue"
+        w="100%"
+      >
+        Search
+      </Button>
+      {valueSearch ? (
+        <Text alignSelf="flex-start">
+          Showing users for {`"${valueSearch}"`}
+        </Text>
+      ) : null}
     </>
   );
 };
