@@ -7,7 +7,6 @@ import {
   Box,
   Flex,
   Heading,
-  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useContext } from "react";
@@ -15,6 +14,8 @@ import { IndexContext } from "../../providers/index.providers";
 import RepoContent from "../repo-content/repo-content.component";
 import Loading from "../loading/loading.component";
 import EmptyState from "../empty-state/empty-state.compionent";
+import { ListUserInterface } from "../../interfaces/list-user.interface";
+import { DataRepoInterface } from "../../interfaces/list-repo.interface";
 
 const ListComponent = () => {
   const {
@@ -28,6 +29,8 @@ const ListComponent = () => {
     valueSubmitSearch,
   } = useContext(IndexContext);
 
+  const bgColor = useColorModeValue("gray.200", "gray.900");
+
   return (
     <Accordion allowToggle>
       {isUserLoading ? (
@@ -39,7 +42,7 @@ const ListComponent = () => {
               <EmptyState size="md" isError={isErrorUser} />
             </Flex>
           ) : (
-            listUserData.map((item: any, idx: number) => (
+            listUserData.map((item: ListUserInterface, idx: number) => (
               <AccordionItem
                 key={idx}
                 my={5}
@@ -61,21 +64,20 @@ const ListComponent = () => {
                     ) : (
                       <>
                         {!isErrorRepo && listRepoData.length > 0 ? (
-                          listRepoData.map((repo: any, idx: number) => (
-                            <Box
-                              key={idx}
-                              h="150px"
-                              bgColor={useColorModeValue(
-                                "gray.200",
-                                "gray.900"
-                              )}
-                              p={4}
-                              my={4}
-                              boxShadow="sm"
-                            >
-                              <RepoContent {...repo} />
-                            </Box>
-                          ))
+                          listRepoData.map(
+                            (repo: DataRepoInterface, idx: number) => (
+                              <Box
+                                key={idx}
+                                h="150px"
+                                bgColor={bgColor}
+                                p={4}
+                                my={4}
+                                boxShadow="sm"
+                              >
+                                <RepoContent {...repo} />
+                              </Box>
+                            )
+                          )
                         ) : (
                           <EmptyState size="xs" isError={isErrorRepo} />
                         )}

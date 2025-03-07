@@ -2,7 +2,12 @@ import { Heading, Image, VStack } from "@chakra-ui/react";
 import notfound from "../../assets/notfound.webp";
 import error from "../../assets/404.webp";
 
-const EmptyState: React.FC<{ isError?: boolean, size: string }> = ({ isError, size }) => {
+type EmptyStateProps = {
+  isError?: boolean;
+  size: string;
+};
+
+const EmptyState: React.FC<EmptyStateProps> = ({ isError, size }) => {
   return (
     <VStack>
       <Image

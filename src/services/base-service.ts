@@ -1,15 +1,20 @@
 import axiosInstance from "./base-connection";
 
-const get = async (url: string) => {
+interface ApiResponse<T> {
+  data: T;
+}
+
+const get = async <T>(url: string): Promise<ApiResponse<T> | string> => {
   try {
-    const response = await axiosInstance.get(encodeURI(url), {
+    const { data } = await axiosInstance.get<ApiResponse<T>>(encodeURI(url), {
       headers: {
         Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
       },
     });
-    return response.data;
+
+    return data;
   } catch (error) {
-    return error || "An error occurred";
+    return error instanceof Error ? error.message : "An error occurred";
   }
 };
 
