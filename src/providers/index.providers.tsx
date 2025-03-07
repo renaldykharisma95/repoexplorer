@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { createContext, useState } from "react";
-import { GetListRepo, GetListUser } from "../services/get-data.api";
-import { ListUserInterface } from "../interfaces/list-user.interface";
-import { DataRepoInterface } from "../interfaces/list-repo.interface";
+import { GetListRepo, GetListUser } from "@services/get-data.api";
+import { ListUserInterface } from "@interfaces/list-user.interface";
+import { DataRepoInterface } from "@interfaces/list-repo.interface";
 
 export interface IndexContextProps {
   valueSearch?: string;

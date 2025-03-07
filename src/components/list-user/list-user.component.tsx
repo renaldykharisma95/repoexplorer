@@ -10,12 +10,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useContext } from "react";
-import { IndexContext } from "../../providers/index.providers";
-import RepoContent from "../repo-content/repo-content.component";
-import Loading from "../loading/loading.component";
-import EmptyState from "../empty-state/empty-state.compionent";
-import { ListUserInterface } from "../../interfaces/list-user.interface";
-import { DataRepoInterface } from "../../interfaces/list-repo.interface";
+import { IndexContext } from "@providers/index.providers";
+import RepoContent from "@components/repo-content/repo-content.component";
+import EmptyState from "@components/empty-state/empty-state.compionent";
+import { ListUserInterface } from "@interfaces/list-user.interface";
+import { DataRepoInterface } from "@interfaces/list-repo.interface";
+import Loading from "@components/loading/loading.component";
 
 const ListComponent = () => {
   const {

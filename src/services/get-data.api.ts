@@ -1,6 +1,6 @@
-import { DataRepoInterface } from "../interfaces/list-repo.interface";
-import { DataUserInterface } from "../interfaces/list-user.interface";
-import get from "./base-service";
+import { DataRepoInterface } from "@interfaces/list-repo.interface";
+import { DataUserInterface } from "@interfaces/list-user.interface";
+import get from "@services/base-service";
 
 export const GetListUser = (search: string) => {
   try {

@@ -1,9 +1,6 @@
 import { Button, Input, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import {
-  IndexContext,
-  IndexContextProps,
-} from "../../providers/index.providers";
+import { IndexContext, IndexContextProps } from "@providers/index.providers";
 
 const SearchInput: React.FC = () => {
   const { valueSearch, setValueSearch, setSubmitSearch } =

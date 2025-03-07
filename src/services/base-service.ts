@@ -1,4 +1,4 @@
-import axiosInstance from "./base-connection";
+import axiosInstance from "@services/base-connection";
 
 interface ApiResponse<T> {
   data: T;

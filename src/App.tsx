@@ -6,11 +6,10 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import "./App.css";
-import SearchInput from "./components/search-input/search-input.component";
-import IndexProviders from "./providers/index.providers";
-import ListComponent from "./components/list-user/list-user.component";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import IndexProviders from "@providers/index.providers";
+import SearchInput from "@components/search-input/search-input.component";
+import ListComponent from "@components/list-user/list-user.component";
 
 function App() {
   const { colorMode, toggleColorMode } = useColorMode();
