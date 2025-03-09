@@ -21,7 +21,9 @@ export default defineConfig({
   plugins: [react()],
   base: "/repoexplorer/",
   define: {
-    "import.meta.env.VITE_API_TOKEN": JSON.stringify(""),
+    "import.meta.env.VITE_API_TOKEN": JSON.stringify(
+      process.env.VITE_API_TOKEN
+    ),
   },
   test: {
     globals: true,
