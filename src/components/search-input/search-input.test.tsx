@@ -2,20 +2,21 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import SearchInput from "./search-input.component";
 import { IndexContext } from "@providers/index.providers";
+import { IndexContextProps } from "@/interfaces/index-providers";
 
 describe("SearchInput Component", () => {
   const mockSetValueSearch = vi.fn();
   const mockRefetch = vi.fn();
   const setUserMock = vi.fn();
 
-  const mockContextValue = {
+  const mockContextValue: IndexContextProps = {
     listUserData: [],
     listRepoData: [],
     isErrorRepo: false,
     isErrorUser: false,
     isUserLoading: false,
     isRepoLoading: false,
-    isSuccess: false,
+    isFetchedAfterMount: false,
     setUser: setUserMock,
     setValueSearch: mockSetValueSearch,
     refetch: mockRefetch,

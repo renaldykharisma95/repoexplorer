@@ -1,6 +1,7 @@
 import { Button, Input, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import { IndexContext, IndexContextProps } from "@providers/index.providers";
+import { IndexContext } from "@providers/index.providers";
+import { IndexContextProps } from "@/interfaces/index-providers";
 
 const SearchInput: React.FC = () => {
   const { valueSearch, setValueSearch, refetch } =

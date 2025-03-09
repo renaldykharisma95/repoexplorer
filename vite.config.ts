@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  base: "/githubrepoexplorer/",
   test: {
     globals: true,
     environment: "jsdom",
