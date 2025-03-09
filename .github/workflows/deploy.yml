@@ -5,6 +5,9 @@ on:
     branches:
       - master  # Make sure this is the correct branch name
 
+environment:
+    name: production  # Link to the "production" environm
+
 jobs:
   build:
     name: Build
