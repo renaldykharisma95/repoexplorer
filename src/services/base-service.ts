@@ -11,7 +11,7 @@ export interface ErrorResponse {
 }
 
 const get = async <T>(url: string): Promise<T | ErrorResponse> => {
-  console.log("VITE_GITHUB_TOKEN_ASD: ", import.meta.env.VITE_GITHUB_TOKEN);
+  console.log("asddd dfdfgdg: ");
 
   try {
     const response = await axiosInstance.get<ApiResponse<T>>(encodeURI(url), {

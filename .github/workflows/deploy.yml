@@ -25,7 +25,7 @@ jobs:
           echo "NODE_ENV=production" >> .env
         shell: bash
 
-      - name: Check .env contents
+      - name: Debug .env file
         run: cat .env
         shell: bash
 
