@@ -19,7 +19,7 @@ export default defineConfig({
     },
   },
   plugins: [react()],
-  base: "/githubrepoexplorer/",
+  base: "/repoexplorer/",
   test: {
     globals: true,
     environment: "jsdom",
