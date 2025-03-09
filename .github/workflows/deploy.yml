@@ -19,6 +19,9 @@ jobs:
         with:
           bun-version: latest  # Always use the latest stable version
 
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
       - name: Build
         run: |
           echo "VITE_API_KEY=${{ secrets.VITE_API_KEY }}" >> .env
@@ -28,9 +31,6 @@ jobs:
       - name: Debug .env file
         run: cat .env
         shell: bash
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
 
       - name: Build project
         run: bun run --env-file=.env build
