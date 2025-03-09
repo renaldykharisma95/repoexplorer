@@ -20,6 +20,9 @@ export default defineConfig({
   },
   plugins: [react()],
   base: "/repoexplorer/",
+  define: {
+    "process.env": process.env,
+  },
   test: {
     globals: true,
     environment: "jsdom",
