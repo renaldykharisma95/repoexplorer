@@ -16,7 +16,7 @@ const get = async <T>(url: string): Promise<T | ErrorResponse> => {
   try {
     const response = await axiosInstance.get<ApiResponse<T>>(encodeURI(url), {
       headers: {
-        Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+        Authorization: `token ${import.meta.env.VITE_API_TOKEN}`,
       },
     });
     return response.data as T;
