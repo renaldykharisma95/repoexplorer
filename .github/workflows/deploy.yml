@@ -1,9 +1,9 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - master  # Make sure this is the correct branch name
+      - master  # Make sure this is your actual branch
 
 jobs:
   build:
@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -33,12 +33,12 @@ jobs:
         shell: bash
 
       - name: Build project
-        run: bun run --env-file=.env build
+        run: bun run build  # Vite auto-loads .env
 
-      - name: Upload production-ready build files
+      - name: Upload production build
         uses: actions/upload-artifact@v4
         with:
-          name: production-files
+          name: production-build
           path: ./dist
 
   deploy:
@@ -47,18 +47,17 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'  # Ensure this matches your branch
 
-    environment:
-      name: production
-
+    permissions:
+      contents: write  # Needed for deploying to GitHub Pages
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: production-files
+          name: production-build
           path: ./dist
 
       - name: Deploy to GitHub Pages
