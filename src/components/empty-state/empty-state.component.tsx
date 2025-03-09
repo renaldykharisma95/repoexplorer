@@ -1,6 +1,6 @@
 import { Heading, Image, VStack } from "@chakra-ui/react";
-import notfound from "@assets/notfound.webp";
-import error from "@assets/404.webp";
+import notfound from "../../assets/notfound.webp";
+import error from "../../assets/404.webp";
 
 type EmptyStateProps = {
   isError?: boolean;

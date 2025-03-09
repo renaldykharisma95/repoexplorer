@@ -12,12 +12,13 @@ import {
 import { useContext } from "react";
 import { IndexContext } from "@providers/index.providers";
 import RepoContent from "@components/repo-content/repo-content.component";
-import EmptyState from "@components/empty-state/empty-state.compionent";
+import EmptyState from "@/components/empty-state/empty-state.component";
 import { ListUserInterface } from "@interfaces/list-user.interface";
 import { DataRepoInterface } from "@interfaces/list-repo.interface";
 import Loading from "@components/loading/loading.component";
 
 const ListComponent = () => {
+  const bgColor = useColorModeValue("gray.200", "gray.900");
   const {
     listUserData,
     listRepoData,
@@ -25,24 +26,24 @@ const ListComponent = () => {
     isErrorUser,
     isUserLoading,
     isRepoLoading,
+    isFetchedAfterMount,
     setUser,
-    valueSubmitSearch,
   } = useContext(IndexContext);
 
-  const bgColor = useColorModeValue("gray.200", "gray.900");
+  const isArray: boolean = Array.isArray(listUserData);
+  const hasUsers: boolean =
+    isArray && !!listUserData?.length && isFetchedAfterMount;
+  const showEmptyState: boolean =
+    isArray && !listUserData?.length && isFetchedAfterMount;
 
   return (
-    <Accordion allowToggle>
-      {isUserLoading ? (
-        <Loading />
-      ) : (
-        <>
-          {!listUserData.length && !!valueSubmitSearch ? (
-            <Flex justifyContent="center" alignItems="center">
-              <EmptyState size="md" isError={isErrorUser} />
-            </Flex>
+    <>
+      {hasUsers ? (
+        <Accordion allowToggle>
+          {isUserLoading ? (
+            <Loading />
           ) : (
-            listUserData.map((item: ListUserInterface, idx: number) => (
+            listUserData?.map((item: ListUserInterface, idx: number) => (
               <AccordionItem
                 key={idx}
                 my={5}
@@ -58,39 +59,41 @@ const ListComponent = () => {
                   </AccordionButton>
                 </Heading>
                 <AccordionPanel pb={4}>
-                  <>
-                    {isRepoLoading ? (
-                      <Loading />
-                    ) : (
-                      <>
-                        {!isErrorRepo && listRepoData.length > 0 ? (
-                          listRepoData.map(
-                            (repo: DataRepoInterface, idx: number) => (
-                              <Box
-                                key={idx}
-                                h="150px"
-                                bgColor={bgColor}
-                                p={4}
-                                my={4}
-                                boxShadow="sm"
-                              >
-                                <RepoContent {...repo} />
-                              </Box>
-                            )
+                  {isRepoLoading ? (
+                    <Loading />
+                  ) : (
+                    <>
+                      {!isErrorRepo && listRepoData.length > 0 ? (
+                        listRepoData.map(
+                          (repo: DataRepoInterface, idx: number) => (
+                            <Box
+                              key={idx}
+                              h="150px"
+                              bgColor={bgColor}
+                              p={4}
+                              my={4}
+                              boxShadow="sm"
+                            >
+                              <RepoContent {...repo} />
+                            </Box>
                           )
-                        ) : (
-                          <EmptyState size="xs" isError={isErrorRepo} />
-                        )}
-                      </>
-                    )}
-                  </>
+                        )
+                      ) : (
+                        <EmptyState size="xs" isError={isErrorRepo} />
+                      )}
+                    </>
+                  )}
                 </AccordionPanel>
               </AccordionItem>
             ))
           )}
-        </>
-      )}
-    </Accordion>
+        </Accordion>
+      ) : showEmptyState ? (
+        <Flex justifyContent="center" alignItems="center">
+          <EmptyState size="md" isError={isErrorUser} />
+        </Flex>
+      ) : null}
+    </>
   );
 };
 

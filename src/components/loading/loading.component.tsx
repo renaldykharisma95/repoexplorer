@@ -6,7 +6,7 @@ const Loading = () => {
       {Array(5)
         .fill(0)
         .map((_, idx) => (
-          <Skeleton key={idx}></Skeleton>
+          <Skeleton role="loadingcontent" key={idx}></Skeleton>
         ))}
     </Stack>
   );

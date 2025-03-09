@@ -1,6 +1,10 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   resolve: {
@@ -15,4 +19,19 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./vitest.setup.ts",
+    coverage: {
+      exclude: [
+        "eslint.config.js",
+        "jest.fileMock.js",
+        "vite.config.ts",
+        "src/interfaces/**",
+        "src/App.tsx",
+        "src/main.tsx",
+      ],
+    },
+  },
 });

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { IndexContext, IndexContextProps } from "@providers/index.providers";
 
 const SearchInput: React.FC = () => {
-  const { valueSearch, setValueSearch, setSubmitSearch } =
+  const { valueSearch, setValueSearch, refetch } =
     useContext<IndexContextProps>(IndexContext);
   return (
     <>
@@ -16,8 +16,9 @@ const SearchInput: React.FC = () => {
         }}
       />
       <Button
+        role="button"
         onClick={() => {
-          if (setSubmitSearch) setSubmitSearch(valueSearch || "");
+          refetch();
         }}
         colorScheme="blue"
         w="100%"

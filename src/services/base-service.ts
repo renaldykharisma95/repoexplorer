@@ -1,20 +1,31 @@
 import axiosInstance from "@services/base-connection";
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   data: T;
 }
 
-const get = async <T>(url: string): Promise<ApiResponse<T> | string> => {
-  try {
-    const { data } = await axiosInstance.get<ApiResponse<T>>(encodeURI(url), {
-      headers: {
-        Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
-      },
-    });
+export interface ErrorResponse {
+  message: string;
+  documentation_url?: string;
+  status?: string;
+}
 
-    return data;
+const get = async <T>(url: string): Promise<T | ErrorResponse> => {
+  try {
+    const response = await axiosInstance.get<ApiResponse<T>>(
+      encodeURI(url),
+      {
+        headers: {
+          Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN}`,
+        },
+      }
+    );
+    return response.data as T;
   } catch (error) {
-    return error instanceof Error ? error.message : "An error occurred";
+    return {
+      message: error instanceof Error ? error.message : "An error occurred",
+      status: "error",
+    };
   }
 };
 

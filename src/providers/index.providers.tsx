@@ -1,22 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { GetListRepo, GetListUser } from "@services/get-data.api";
 import { ListUserInterface } from "@interfaces/list-user.interface";
 import { DataRepoInterface } from "@interfaces/list-repo.interface";
-
-export interface IndexContextProps {
-  valueSearch?: string;
-  valueSubmitSearch: string;
-  setValueSearch?: React.Dispatch<React.SetStateAction<string>>;
-  setSubmitSearch?: React.Dispatch<React.SetStateAction<string>>;
-  listUserData: ListUserInterface[];
-  listRepoData: DataRepoInterface[];
-  isErrorUser: boolean;
-  isErrorRepo: boolean;
-  setUser: React.Dispatch<React.SetStateAction<string>>;
-  isUserLoading: boolean;
-  isRepoLoading: boolean;
-}
+import { ErrorResponse } from "@/services/base-service";
+import { IndexContextProps } from "@/interfaces/index-providers";
 
 type IndexProviderInterface = {
   children: React.ReactNode;
@@ -26,24 +14,34 @@ export const IndexContext = createContext({} as IndexContextProps);
 
 const IndexProviders = ({ children }: IndexProviderInterface) => {
   const [valueSearch, setValueSearch] = useState<string>("");
-  const [valueSubmitSearch, setSubmitSearch] = useState<string>("");
   const [user, setUser] = useState<string>("");
+  const [listUserData, setListUserData] = useState<ListUserInterface[] | null>(
+    null
+  );
 
-  const {
-    data: listUserData = [],
-    isError: isErrorUser,
-    isSuccess,
-    isLoading: isUserLoading,
-  } = useQuery({
-    queryKey: ["users", valueSubmitSearch],
-    queryFn: () =>
-      GetListUser(valueSubmitSearch) as Promise<{ items: ListUserInterface[] }>,
-    select: ({ items }) => items,
-    enabled: !!valueSubmitSearch.length,
+  const preventRefetch = {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
     staleTime: Infinity,
+  };
+
+  const {
+    data: userData = [],
+    isError: isErrorUser,
+    isSuccess,
+    isFetching: isUserLoading,
+    isFetchedAfterMount,
+    refetch,
+  } = useQuery({
+    queryKey: ["users", valueSearch],
+    queryFn: () =>
+      GetListUser(valueSearch) as Promise<
+        { items: ListUserInterface[] } & ErrorResponse
+      >,
+    select: ({ items }) => items,
+    enabled: false,
+    ...preventRefetch,
   });
 
   const {
@@ -52,25 +50,39 @@ const IndexProviders = ({ children }: IndexProviderInterface) => {
     isLoading: isRepoLoading,
   } = useQuery({
     queryKey: ["repo", user],
-    queryFn: () => GetListRepo(user) as Promise<DataRepoInterface[]>,
+    queryFn: () =>
+      GetListRepo(user) as Promise<DataRepoInterface[] & ErrorResponse>,
     select: (data) => data || [],
-    enabled: isSuccess && !!user,
+    enabled: !!user,
+    ...preventRefetch,
   });
+
+  useEffect(() => {
+    if (!valueSearch.length || isSuccess) {
+      setListUserData([]);
+    } else {
+      setListUserData(null);
+    }
+  }, [valueSearch, isSuccess]);
+
+  useEffect(() => {
+    if (userData.length > 0 && isFetchedAfterMount) setListUserData(userData);
+  }, [userData, isFetchedAfterMount]);
 
   return (
     <IndexContext.Provider
       value={{
         valueSearch,
-        valueSubmitSearch,
+        refetch,
         setValueSearch,
-        setSubmitSearch,
+        setUser,
         listUserData,
         listRepoData,
         isErrorUser,
         isErrorRepo,
-        setUser,
         isUserLoading,
         isRepoLoading,
+        isFetchedAfterMount,
       }}
     >
       {children}
