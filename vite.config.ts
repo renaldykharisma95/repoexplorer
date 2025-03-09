@@ -23,9 +23,6 @@ export default defineConfig({
   },
   plugins: [react()],
   base: "/repoexplorer/",
-  // define: {
-  //   "process.env.VITE_API_TOKEN": JSON.stringify(process.env.VITE_API_TOKEN),
-  // },
   test: {
     globals: true,
     environment: "jsdom",
@@ -38,6 +35,7 @@ export default defineConfig({
         "src/interfaces/**",
         "src/App.tsx",
         "src/main.tsx",
+        "dist/**",
       ],
     },
   },
