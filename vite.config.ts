@@ -23,9 +23,9 @@ export default defineConfig({
   },
   plugins: [react()],
   base: "/repoexplorer/",
-  define: {
-    "process.env.VITE_API_TOKEN": JSON.stringify(process.env.VITE_API_TOKEN),
-  },
+  // define: {
+  //   "process.env.VITE_API_TOKEN": JSON.stringify(process.env.VITE_API_TOKEN),
+  // },
   test: {
     globals: true,
     environment: "jsdom",

@@ -25,6 +25,11 @@ jobs:
           echo "NODE_ENV=production" >> .env
         shell: bash
 
+      - name: Build
+        run: |
+          echo "REACT_APP_API_TOKEN=${{ secrets.VITE_API_TOKEN }}" >> .env
+          npm run build
+
       - name: Debug .env file
         run: cat .env
         shell: bash
@@ -49,6 +54,9 @@ jobs:
 
     environment:
       name: production
+
+    env:
+      VITE_API_TOKEN: ${{ secrets.VITE_API_TOKEN }}
 
     steps:
       - name: Checkout repo
