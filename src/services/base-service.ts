@@ -11,8 +11,6 @@ export interface ErrorResponse {
 }
 
 const get = async <T>(url: string): Promise<T | ErrorResponse> => {
-  console.log("asd");
-
   try {
     const response = await axiosInstance.get<ApiResponse<T>>(encodeURI(url), {
       headers: {
