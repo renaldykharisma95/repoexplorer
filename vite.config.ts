@@ -2,9 +2,12 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { fileURLToPath } from "node:url";
+import dotenv from "dotenv";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config();
 
 export default defineConfig({
   resolve: {
@@ -21,7 +24,7 @@ export default defineConfig({
   plugins: [react()],
   base: "/repoexplorer/",
   define: {
-    "process.env": process.env,
+    "process.env": JSON.stringify(process.env),
   },
   test: {
     globals: true,
